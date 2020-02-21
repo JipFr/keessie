@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kees???</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="vue.js"></script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, minimal-ui, viewport-fit=cover">
+	</head>
+	<body>
+		<div class="wrapper">
+			<header></header>
+			<div class="bodyWrapper">
+				<div class="body" id="app">
+
+					<nav>
+						<div class="navItem focused" data-href="request" onclick="setPage(this.dataset.href);">
+							Verzoeken
+						</div>
+						<div class="navItem" data-href="overview" onclick="setPage(this.dataset.href);">
+							Overzicht
+						</div>
+					</nav>
+
+					<div class="coreLayout requestDiv show" data-page="request">
+						<div class="bodyCore">
+							<div class="categories">
+								<div class="category" v-for="category of stockCategories">
+									<div class="categoryTitleDiv">
+										<h2 class="categoryTitle">{{ category | convertCategory }}</h2>
+										<input class="search" v-bind:placeholder="getSearch(category)" v-on:input="search">
+									</div>
+									<div class="stockList">
+										<stock-card 
+											v-for="item of stock[category]" 
+											v-bind:name="item.name" 
+											v-bind:price="item.price"
+											v-bind:amount="item.amount"
+											v-bind:max="item.max"
+											@update="update"
+										>
+									</div>
+								</div>
+							</div>
+						</div>
+	
+						<aside class="bodyAside">
+							<div class="currentOrders">
+								<h2 class="styleTitle">Jouw wensen</h2>
+								<div class="currentOrderList">
+									<stock-card 
+										v-for="item of getSelected()" 
+										v-bind:name="item.name" 
+										v-bind:price="item.price"
+										v-bind:amount="item.amount"
+										v-bind:max="item.max"
+										@update-amount="update"
+									>
+								</div>
+								<div class="listInformation">
+									<div class="alignEnd informationBit">
+										<p>Totaal: <strong>{{ getTotal() | toPrice }}</strong></p>
+									</div>
+									<div class="alignEnd informationBit">
+										<button class="send" onclick="sendRequests()">Verstuur wensen</button>
+									</div>
+								</div>
+							</div>
+						</aside>
+					</div>
+					<div class="coreLayout requestDiv" data-page="overview">
+						Hier volgt het overzicht
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<script src="db.js"></script>
+		<script src="stock.js"></script>
+		<script src="app.js"></script>    
+		<script src="main.js"></script>   
+		<script src="https://dweet.io/client/dweet.io.min.js"></script> 
+	</body>
+</html>

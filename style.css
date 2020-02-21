@@ -1,0 +1,262 @@
+
+:root {
+
+	--gap_small: 5px;
+	--gap: 10px;
+	--gap_large: 20px;
+
+	--main: #07b1ad;
+	--body: white;
+	--text: #191919;
+	--secondary: rgba(0, 0, 0, 0.6);
+	--border: rgba(0, 0, 0, 0.1);
+}
+
+body {
+	margin: 0;
+	background: var(--body);
+	color: var(--text);
+	font-family: Roboto, Arial;
+}
+
+header {
+	width: 100%;
+	height: 50px;
+	background: var(--main);
+}
+
+.bodyWrapper {
+	margin: var(--gap_large);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.body {
+	width: 100%;
+	max-width: 1300px;
+}
+
+nav {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: var(--gap_large);
+	position: sticky;
+	top: 0;
+	background: white;
+	border-bottom: 1px solid var(--border);
+	padding-top: var(--gap);
+	z-index: 150;
+}
+nav .navItem:first-child {
+	margin-left: var(--gap);
+}
+nav .navItem {
+	padding: 15px 30px;
+	border-bottom: 4px solid transparent;
+	margin-bottom: -1px;
+}
+nav .navItem.focused {
+	border-bottom: 3px solid var(--main);
+}
+nav .navItem:not(.focused) {
+	cursor: pointer;
+}
+
+[data-page]:not(.show) {
+	display: none;
+}
+
+.coreLayout {
+	display: grid;
+	grid-template-columns: 1fr 350px;
+	grid-gap: calc(var(--gap_large) * 2);
+	grid-template-areas: "core aside";
+}
+.bodyCore {
+	grid-area: core;
+}
+aside.bodyAside {
+	grid-area: aside;
+}
+
+.category {
+	padding-bottom: var(--gap_large);
+	border-bottom: 1px solid var(--border);
+	margin-bottom: var(--gap_large);
+}
+.categories .category:last-child {
+	border-bottom: 0;
+}
+
+.category .categoryTitleDiv {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	margin-bottom: var(--gap);
+	align-items: center;
+}
+.category .categoryTitleDiv .search {
+	padding: 0; margin: 0; border: 0;
+	border: 1px solid var(--border);
+	border-radius: 4px;
+	font-size: 1rem;
+	background: transparent;
+	color: var(--text);
+	padding: var(--gap);
+}
+.category .categoryTitle, .styleTitle {
+	margin: 0;
+	padding: 6px 0;
+}
+
+.stockList {
+	width: 100%;
+	display: grid;
+	grid-gap: var(--gap);
+	grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+.card {
+	padding: var(--gap) var(--gap);
+	border: 1px solid var(--border);
+	border-left: 4px solid var(--main);
+	border-radius: 4px;
+}
+.currentOrderList .card {
+	border-left-color: var(--text);
+}
+.cardLayout {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-gap: var(--gap);
+}
+.card .title {
+	margin: 0;
+}
+.card .price {
+	margin: 0;
+	margin-top: var(--gap_small);
+}
+
+.inputDiv.countInput {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-gap: var(--gap);
+	align-items: center;
+}
+.inputDiv p {
+	margin: 0;
+}
+.smallBtn {
+	border: 0; width: 0; padding: 0;
+	width: 24px;
+	height: 24px;
+	background: #f0f1f6;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.smallBtn svg {
+	width: 16px;
+	height: 16px;
+}
+
+.customCheckmark[data-checked="true"] .feather-plus {
+	display: none;
+}
+.customCheckmark[data-checked="false"] .feather-minus {
+	display: none;
+}
+.bodyCore .cardExtra {
+	display: none;
+}
+.choices {
+	display: grid;
+	grid-template-columns: 100%;
+	grid-gap: var(--gap);
+}
+
+.choice {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-gap: var(--gap);
+	align-items: center;
+}
+.choice p {
+	margin: 0;
+}
+
+.itemTotal .price {
+	text-align: center;
+	margin-top: var(--gap);
+}
+
+.currentOrders {
+	position: sticky;
+	top: 80px;
+}
+
+.currentOrderList {
+	display: grid;
+	grid-template-columns: 100%;
+	grid-gap: var(--gap);
+	margin: var(--gap) 0;
+}
+
+.informationBit p {
+	margin: 0;
+}
+.informationBit + .informationBit {
+	margin-top: var(--gap);
+}
+.informationBit button {
+	border: 0; padding: 0; margin: 0;
+	background: var(--main);
+	color: white;
+	font-size: 1rem;
+	padding: 8px 20px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+	.stockList {
+		grid-template-columns: 100%;
+	}
+	.coreLayout {
+		grid-template-columns: 100%;
+		grid-template-areas: 
+			"aside"
+			"core";
+	}
+	aside.bodyAside {
+		position: normal;
+	}
+	nav {
+		justify-content: center;
+	}
+	nav .navItem:first-child {
+		margin-left: 0;
+	}
+}
+
+.secondary {
+	color: var(--secondary);
+}
+.hidden {
+	display: none;
+	opacity: 0;
+}
+.alignEnd {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+hr {
+	border: 0;
+	margin: var(--gap) 0;
+	width: 100%;
+	height: 1px;
+	background: var(--border);
+}
