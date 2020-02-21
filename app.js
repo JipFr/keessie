@@ -53,14 +53,18 @@ function getTotal() {
 
 
 let myComp = Vue.component("stock-card", {
-	props: ["name", "price", "amount", "max"],
+	props: ["name", "price", "amount", "max", "toppings"],
 	data: () => {
 		return {
-			stock
+			stock,
+			toppingIDs
 		}
 	},
 	filters: {
-		toPrice
+		toPrice,
+		convertTopping(key) {
+			return toppingsConverted[key];
+		}
 	},
 	methods: {
 		addOne() {
@@ -70,6 +74,12 @@ let myComp = Vue.component("stock-card", {
 		removeOne() {
 			let amount = this.amount >= 1 ? this.amount - 1 : this.amount;
 			this.$emit("update", "amount", amount, this.name);
+		},
+		getToppingBool(toppings, key) {
+			return toppings[key] ? toppings[key] : null;
+		},
+		showCardExtra(toppings) {
+			return Object.values(toppings).find(i => i) ? true : false;
 		}
 	},
 	template: `
@@ -94,30 +104,18 @@ let myComp = Vue.component("stock-card", {
 				</div>
 			</aside>
 		</div>
-		<div class="cardExtra">
+		<div class="cardExtra" v-if="showCardExtra(toppings)">
 			<hr>
 			<div class="choices">
-				<div class="choice" data-option="onions">
-					<button class="customCheckmark smallBtn" data-checked="true">
+				
+			<div class="choice" data-option="onions" v-for="key of toppingIDs" v-if="getToppingBool(toppings, key)">
+					<button class="customCheckmark smallBtn" v-bind:data-checked="getToppingBool(toppings, key)">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 					</button>
-					<p>Uitjes</p>
+					<p>{{ key | convertTopping }}</p>
 				</div>
-				<div class="choice" data-option="curry">
-					<button class="customCheckmark smallBtn" data-checked="true">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-					</button>
-					<p>Curry</p>
-				</div>
-				<div class="choice" data-option="mayo">
-					<button class="customCheckmark smallBtn" data-checked="false">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-					</button>
-					<p>Mayo</p>
-				</div>
+
 			</div>
 		</div>
 	</div>

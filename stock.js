@@ -1,15 +1,26 @@
 
-// const firebase = require("firebase");
+// Mogelijke topping TYPES 
 
+const toppingIDs = ["onions", "mayo", "curry"];
+const toppingsConverted = {
+	"onions": "Uitjes",
+	"mayo": "Mayo",
+	"curry": "Curry"
+}
 
 class Item {
-	constructor(name, cents, category) {
+	constructor(name, cents, category, toppingTypes = []) {
 		this.name = name;
 		this.price = cents;
 		this.category = category;
 		this.amount = 0;
-		this.calculated = {}
 		this.max = 9;
+
+		this.toppings = {}
+		for(let id of toppingIDs) {
+			this.toppings[id] = toppingTypes.includes(id) ? "false" : null;
+		}
+
 	}
 }
 
@@ -18,17 +29,17 @@ function loadStock() {
 	let stock = [];
 
 	// Friet
-	stock.push(new Item("Oerfriet zonder", 180, "friet"));
-	stock.push(new Item("Oerfriet met mayo", 210, "friet"));
-	stock.push(new Item("Oerfriet speciaal", 240, "friet"));
-	stock.push(new Item("Oerfriet pindasaus", 270, "friet"));
-	stock.push(new Item("Oerfriet oorlog", 290, "friet"));
-	stock.push(new Item("Oerfriet super", 400, "friet"));
-	stock.push(new Item("Oerfriet super oorlog", 450, "friet"));
-	stock.push(new Item("Oerfriet kipcorn super", 470, "friet"));
-	stock.push(new Item("Oerfriet braadworst", 470, "friet"));
-	stock.push(new Item("Oerfriet waterfiets", 520, "friet"));
-	stock.push(new Item("Friet br. worst oorlog", 500, "friet"));
+	stock.push(new Item("Oerfriet zonder", 180, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet met mayo", 210, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet speciaal", 240, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet pindasaus", 270, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet oorlog", 290, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet super", 400, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet super oorlog", 450, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet kipcorn super", 470, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet braadworst", 470, "friet", [...toppingIDs]));
+	stock.push(new Item("Oerfriet waterfiets", 520, "friet", [...toppingIDs]));
+	stock.push(new Item("Friet br. worst oorlog", 500, "friet", [...toppingIDs]));
 	// stock.push(new Item("Extra topping", 50, "friet"));
 	// stock.push(new Item("Grote portie extra", 75, "friet"));
 

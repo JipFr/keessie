@@ -10,17 +10,21 @@
 	<body>
 		<div class="wrapper">
 			<header></header>
+			
+			<div class="navWrapper">
+				<nav class="bodyWidth">
+					<div class="navItem focused" data-href="request" onclick="setPage(this.dataset.href);">
+						Verzoeken
+					</div>
+					<div class="navItem" data-href="overview" onclick="setPage(this.dataset.href);">
+						Overzicht
+					</div>
+				</nav>
+			</div>
+			
 			<div class="bodyWrapper">
-				<div class="body" id="app">
 
-					<nav>
-						<div class="navItem focused" data-href="request" onclick="setPage(this.dataset.href);">
-							Verzoeken
-						</div>
-						<div class="navItem" data-href="overview" onclick="setPage(this.dataset.href);">
-							Overzicht
-						</div>
-					</nav>
+				<div class="body bodyWidth" id="app">
 
 					<div class="coreLayout requestDiv show" data-page="request">
 						<div class="bodyCore">
@@ -37,6 +41,7 @@
 											v-bind:price="item.price"
 											v-bind:amount="item.amount"
 											v-bind:max="item.max"
+											v-bind:toppings="item.toppings"
 											@update="update"
 										>
 									</div>
@@ -54,7 +59,8 @@
 										v-bind:price="item.price"
 										v-bind:amount="item.amount"
 										v-bind:max="item.max"
-										@update-amount="update"
+										v-bind:toppings="item.toppings"
+										@update="update"
 									>
 								</div>
 								<div class="listInformation">
