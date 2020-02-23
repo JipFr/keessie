@@ -1,24 +1,25 @@
 
-// Mogelijke topping TYPES 
+// Mogelijke option TYPES 
 
-const toppingIDs = ["onions", "mayo", "curry"];
-const toppingsConverted = {
+const optionIDs = ["largeSize", "onions", "mayo", "curry"];
+const optionsConverted = {
 	"onions": "Uitjes",
 	"mayo": "Mayo",
-	"curry": "Curry"
+	"curry": "Curry",
+	"largeSize": "Grote portie"
 }
 
 class Item {
-	constructor(name, cents, category, toppingTypes = []) {
+	constructor(name, cents, category, optionTypes = []) {
 		this.name = name;
 		this.price = cents;
 		this.category = category;
 		this.amount = 0;
 		this.max = 9;
 
-		this.toppings = {}
-		for(let id of toppingIDs) {
-			this.toppings[id] = toppingTypes.includes(id) ? "false" : null;
+		this.options = {}
+		for(let id of optionIDs) {
+			this.options[id] = optionTypes.includes(id) ? "false" : null;
 		}
 
 	}
@@ -29,18 +30,18 @@ function loadStock() {
 	let stock = [];
 
 	// Friet
-	stock.push(new Item("Oerfriet zonder", 180, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet met mayo", 210, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet speciaal", 240, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet pindasaus", 270, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet oorlog", 290, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet super", 400, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet super oorlog", 450, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet kipcorn super", 470, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet braadworst", 470, "friet", [...toppingIDs]));
-	stock.push(new Item("Oerfriet waterfiets", 520, "friet", [...toppingIDs]));
-	stock.push(new Item("Friet br. worst oorlog", 500, "friet", [...toppingIDs]));
-	// stock.push(new Item("Extra topping", 50, "friet"));
+	stock.push(new Item("Oerfriet zonder", 180, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet met mayo", 210, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet speciaal", 240, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet pindasaus", 270, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet oorlog", 290, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet super", 400, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet super oorlog", 450, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet kipcorn super", 470, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet braadworst", 470, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet waterfiets", 520, "friet", [...optionIDs]));
+	stock.push(new Item("Friet br. worst oorlog", 500, "friet", [...optionIDs]));
+	// stock.push(new Item("Extra option", 50, "friet"));
 	// stock.push(new Item("Grote portie extra", 75, "friet"));
 
 	// Snacks

@@ -53,17 +53,17 @@ function getTotal() {
 
 
 let myComp = Vue.component("stock-card", {
-	props: ["name", "price", "amount", "max", "toppings"],
+	props: ["name", "price", "amount", "max", "options"],
 	data: () => {
 		return {
 			stock,
-			toppingIDs
+			optionIDs
 		}
 	},
 	filters: {
 		toPrice,
-		convertTopping(key) {
-			return toppingsConverted[key];
+		convertoption(key) {
+			return optionsConverted[key];
 		}
 	},
 	methods: {
@@ -75,11 +75,18 @@ let myComp = Vue.component("stock-card", {
 			let amount = this.amount >= 1 ? this.amount - 1 : this.amount;
 			this.$emit("update", "amount", amount, this.name);
 		},
-		getToppingBool(toppings, key) {
-			return toppings[key] ? toppings[key] : null;
+		getoptionBool(options, key) {
+			return options[key] ? options[key] : null;
 		},
-		showCardExtra(toppings) {
-			return Object.values(toppings).find(i => i) ? true : false;
+		showCardExtra(options) {
+			return Object.values(options).find(i => i) ? true : false;
+		},
+		toggleOpt(thing) {
+			let name = thing.target.closest(".card").querySelector(".title").innerText;
+			let el = thing.target.closest("[data-option]");
+			let opt = el.dataset.option;
+			console.log(name, opt);
+			this.$emit("update-opt", name, opt);
 		}
 	},
 	template: `
@@ -104,16 +111,16 @@ let myComp = Vue.component("stock-card", {
 				</div>
 			</aside>
 		</div>
-		<div class="cardExtra" v-if="showCardExtra(toppings)">
+		<div class="cardExtra" v-if="showCardExtra(options)">
 			<hr>
 			<div class="choices">
 				
-			<div class="choice" data-option="onions" v-for="key of toppingIDs" v-if="getToppingBool(toppings, key)">
-					<button class="customCheckmark smallBtn" v-bind:data-checked="getToppingBool(toppings, key)">
+			<div class="choice" v-bind:data-option="key" v-for="key of optionIDs" v-if="getoptionBool(options, key)" v-on:click="toggleOpt">
+					<button class="customCheckmark smallBtn" v-bind:data-checked="getoptionBool(options, key)">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 					</button>
-					<p>{{ key | convertTopping }}</p>
+					<p>{{ key | convertoption }}</p>
 				</div>
 
 			</div>
@@ -136,6 +143,10 @@ const myApp = new Vue({
 	methods: {
 		update(key, value, name) {
 			allStock.find(item => item.name === name)[key] = value;
+		},
+		updateOpt(name, opt) {
+			let item = allStock.find(item => item.name === name);
+			item.options[opt] = item.options[opt] === "true" ? "false" : "true";
 		},
 		getSelected,
 		search,

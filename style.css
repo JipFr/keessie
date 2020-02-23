@@ -119,8 +119,8 @@ aside.bodyAside {
 	background: transparent;
 	color: var(--text);
 	padding: var(--gap);
-	width: calc(100% - 2px);
-	max-width: 400px;
+	width: 250px;
+	-webkit-appareance: none;
 }
 .category .categoryTitle, .styleTitle {
 	margin: 0;
@@ -257,6 +257,9 @@ aside.bodyAside {
 	}
 	nav .navItem:first-child {
 		margin-left: 0;
+	}
+	.category .categoryTitleDiv .search {
+		width: auto;
 	}
 }
 

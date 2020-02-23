@@ -41,8 +41,9 @@
 											v-bind:price="item.price"
 											v-bind:amount="item.amount"
 											v-bind:max="item.max"
-											v-bind:toppings="item.toppings"
+											v-bind:options="item.options"
 											@update="update"
+											@update-opt="updateOpt"
 										>
 									</div>
 								</div>
@@ -59,8 +60,9 @@
 										v-bind:price="item.price"
 										v-bind:amount="item.amount"
 										v-bind:max="item.max"
-										v-bind:toppings="item.toppings"
+										v-bind:options="item.options"
 										@update="update"
+										@update-opt="updateOpt"
 									>
 								</div>
 								<div class="listInformation">
