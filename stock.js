@@ -1,18 +1,20 @@
 
 // Mogelijke option TYPES 
 
-const optionIDs = ["largeSize", "onions", "mayo", "curry"];
+const optionIDs = ["largeSize", "onions", "mayo", "curry", "turk"];
 const optionsConverted = {
 	"onions": "Uitjes",
 	"mayo": "Mayo",
 	"curry": "Curry",
-	"largeSize": "Grote portie"
+	"largeSize": "Grote portie",
+	"turk": "Domme Turk"
 }
 const optionPricings = {
 	"onions": 50,
 	"mayo": 50,
 	"curry": 50,
-	"largeSize": 75
+	"largeSize": 75,
+	"turk": 5e3
 }
 
 
@@ -50,8 +52,7 @@ function loadStock() {
 	stock.push(new Item("Oerfriet braadworst", 470, "friet", [...optionIDs]));
 	stock.push(new Item("Oerfriet waterfiets", 520, "friet", [...optionIDs]));
 	stock.push(new Item("Friet br. worst oorlog", 500, "friet", [...optionIDs]));
-	// stock.push(new Item("Extra option", 50, "friet"));
-	// stock.push(new Item("Grote portie extra", 75, "friet"));
+	stock.push(new Item("", 500, "friet", [...optionIDs]));
 
 	// Snacks
 	stock.push(new Item("Frikandel", 160, "snack"));
@@ -67,7 +68,7 @@ function loadStock() {
 	stock.push(new Item("Kipcorn", 210, "snack"));
 
 	// Other
-	stock.push(new Item("Ons paradepaardje Twense bal uit de jus", 210, "other"));
+	stock.push(new Item("Ons paradepaardje Twentse bal uit de jus", 210, "other", ["turk"]));
 	stock.push(new Item("Broodje hamburger vers van de plaat edition", 260, "other"));
 	stock.push(new Item("Cheeseburger vers van de plaat + uien", 340, "other"));
 	stock.push(new Item("Boordje braadworst", 380, "other"));

@@ -99,7 +99,6 @@ let myComp = Vue.component("stock-card", {
 		},
 		toOptionString(options) {
 			let optionKeys = Object.keys(options).filter(option => options[option] === "true");
-			console.log(optionKeys);
 			let optionString = optionKeys.map((option, index) => {
 				return convertOption(option)[index !== 0 ? "toLowerCase" : "toString"]();
 			}).join(", ");

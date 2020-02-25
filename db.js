@@ -36,13 +36,15 @@ async function sendRequests() {
 }
 
 function getRequests() {
-	dweetio.get_all_dweets_for(dweet_name, (err, dweets) => {
+	return new Promise((resolve, reject) => {
+		dweetio.get_all_dweets_for(dweet_name, (err, dweets) => {
 
-		// Dweets is an array of dweets
-		console.log(dweets);
-		for(let dweet of dweets) {
-			console.log(dweet.content);
-		}
-	
-	});
+			if(err) {
+				reject(err);
+				throw err;
+			}
+			// Dweets is an array of dweets
+			resolve(dweets);
+		});
+	})
 }
