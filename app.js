@@ -69,6 +69,9 @@ function getTotal() {
 	return total;
 }
 
+function convertOption(key) {
+	return optionsConverted[key];
+}
 
 let myComp = Vue.component("stock-card", {
 	props: ["name", "price", "amount", "max", "options", "collapsed"],
@@ -81,9 +84,7 @@ let myComp = Vue.component("stock-card", {
 	},
 	filters: {
 		toPrice,
-		convertOption(key) {
-			return optionsConverted[key];
-		},
+		convertOption,
 		hasOpts(options) {
 
 			// See if there's enabled options, 
@@ -95,6 +96,14 @@ let myComp = Vue.component("stock-card", {
 		},
 		getPrice(key) {
 			return optionPricings[key];
+		},
+		toOptionString(options) {
+			let optionKeys = Object.keys(options).filter(option => options[option] === "true");
+			console.log(optionKeys);
+			let optionString = optionKeys.map((option, index) => {
+				return convertOption(option)[index !== 0 ? "toLowerCase" : "toString"]();
+			}).join(", ");
+			return optionString;
 		}
 	},
 	methods: {
@@ -133,6 +142,7 @@ let myComp = Vue.component("stock-card", {
 	<div class="stockItem card" v-bind:data-collapsed="collapsed.toString()" v-bind:data-has-opts="options | hasOpts">
 		<div class="cardMain cardLayout">
 			<div class="cardCore">
+				<p class="extras">{{ options | toOptionString}}</p>
 				<h3 class="title">{{ name }}</h3>
 				<h4 class="price">{{ price | toPrice }}</h4>
 			</div>

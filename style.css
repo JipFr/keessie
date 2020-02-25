@@ -149,6 +149,20 @@ aside.bodyAside {
 	grid-gap: 0 var(--gap);
 	align-items: center;
 }
+.bodyCore .card .extras {
+	display: none;
+}
+.card .extras {
+	margin: 0;
+	color: var(--secondary);
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+.card .extras:not(:empty) {
+	margin-bottom: var(--gap_small);
+}
 .card .title {
 	margin: 0;
 }
