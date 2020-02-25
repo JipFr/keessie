@@ -8,6 +8,13 @@ const optionsConverted = {
 	"curry": "Curry",
 	"largeSize": "Grote portie"
 }
+const optionPricings = {
+	"onions": 50,
+	"mayo": 50,
+	"curry": 50,
+	"largeSize": 75
+}
+
 
 class Item {
 	constructor(name, cents, category, optionTypes = []) {
@@ -16,6 +23,8 @@ class Item {
 		this.category = category;
 		this.amount = 0;
 		this.max = 9;
+
+		this.collapsed = true;
 
 		this.options = {}
 		for(let id of optionIDs) {
@@ -30,7 +39,7 @@ function loadStock() {
 	let stock = [];
 
 	// Friet
-	stock.push(new Item("Oerfriet zonder", 180, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet zonder", 180, "friet", ["largeSize", "onions", "curry"]));
 	stock.push(new Item("Oerfriet met mayo", 210, "friet", [...optionIDs]));
 	stock.push(new Item("Oerfriet speciaal", 240, "friet", [...optionIDs]));
 	stock.push(new Item("Oerfriet pindasaus", 270, "friet", [...optionIDs]));

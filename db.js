@@ -4,13 +4,23 @@ const dweet_name = "ictmaatwerk-friet-dev2";
 async function sendRequests() {
 	const name = prompt("Namens wie?");
 	if(!name) return null;
+
 	let mappedEntry = {
 		from: name,
 		wishes: JSON.stringify(getSelected().map(sel => {
+
+			let optionKeys = Object.keys(sel.options).filter(key => sel.options[key]);
+			let options = {}
+			for(let key of optionKeys) {
+				options[key] = sel.options[key] === "true" ? true : false;
+			}
+
 			return {
 				amount: sel.amount,
-				item: sel.name
+				item: sel.name,
+				options
 			}
+
 		}))
 	}
 	dweetio.dweet_for(dweet_name, mappedEntry, (err, dweet) => {
@@ -18,8 +28,8 @@ async function sendRequests() {
 			alert("Er ging iets mis: " + err);
 			throw err;
 		}
-		console.log(dweet.thing);
-		alert("Je wensen zijn verstuurd")
+		alert("Je wensen zijn verstuurd");
+		location.reload();
 	});
 	console.log(mappedEntry);
 	

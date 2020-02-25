@@ -42,6 +42,7 @@
 											v-bind:amount="item.amount"
 											v-bind:max="item.max"
 											v-bind:options="item.options"
+											v-bind:collapsed="item.collapsed"
 											@update="update"
 											@update-opt="updateOpt"
 										>
@@ -51,8 +52,9 @@
 						</div>
 	
 						<aside class="bodyAside">
-							<div class="currentOrders">
+							<div class="currentOrders" v-bind:data-wishes-count="getSelected().length">
 								<h2 class="styleTitle">Jouw wensen</h2>
+								<p class="hideOnContent secondary">...</p>
 								<div class="currentOrderList">
 									<stock-card 
 										v-for="item of getSelected()" 
@@ -61,8 +63,10 @@
 										v-bind:amount="item.amount"
 										v-bind:max="item.max"
 										v-bind:options="item.options"
+										v-bind:collapsed="item.collapsed"
 										@update="update"
 										@update-opt="updateOpt"
+										@reset-collapse="resetCollapse"
 									>
 								</div>
 								<div class="listInformation">

@@ -47,7 +47,7 @@ header {
 
 .body, .bodyWidth {
 	width: 100%;
-	max-width: 1300px;
+	max-width: 1700px;
 }
 
 .navWrapper {
@@ -131,7 +131,7 @@ aside.bodyAside {
 	width: 100%;
 	display: grid;
 	grid-gap: var(--gap);
-	grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .card {
@@ -146,7 +146,7 @@ aside.bodyAside {
 .cardLayout {
 	display: grid;
 	grid-template-columns: 1fr auto;
-	grid-gap: var(--gap);
+	grid-gap: 0 var(--gap);
 	align-items: center;
 }
 .card .title {
@@ -181,15 +181,41 @@ aside.bodyAside {
 	height: 16px;
 }
 
-.customCheckmark[data-checked="true"] .feather-plus {
+.choice[data-checked="true"] .customCheckmark .feather-plus {
 	display: none;
 }
-.customCheckmark[data-checked="false"] .feather-minus {
+.choice[data-checked="false"] .customCheckmark .feather-minus {
 	display: none;
 }
-.bodyCore .cardExtra {
-	/* display: none; */
+.card[data-collapsed="true"] .cardExtra {
+	display: none;
 }
+.card[data-has-opts="true"][data-collapsed="false"] .extendOptions svg {
+	transform: rotate(180deg);
+}
+
+.cardLayout .extendOptions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-column: span 2;
+}
+.card[data-collapsed="false"] .extendOptions {
+	margin-bottom: var(--gap);
+}
+.bodyCore .cardExtra, .bodyCore .extendOptions {
+	display: none;
+}
+.card .extendOptions svg {
+	display: block;
+	color: var(--secondary);
+}
+.card[data-has-opts="false"] .extendOptions {
+	display: none;
+}
+
+
+
 .choices {
 	display: grid;
 	grid-template-columns: 100%;
@@ -198,12 +224,15 @@ aside.bodyAside {
 
 .choice {
 	display: grid;
-	grid-template-columns: auto 1fr;
+	grid-template-columns: auto 1fr auto;
 	grid-gap: var(--gap);
 	align-items: center;
 }
 .choice p {
 	margin: 0;
+}
+.choice[data-checked="false"] .price {
+	color: var(--secondary);
 }
 
 .itemTotal .price {
@@ -214,6 +243,13 @@ aside.bodyAside {
 .currentOrders {
 	position: sticky;
 	top: 80px;
+}
+
+.currentOrders[data-wishes-count="0"] .listInformation {
+	display: none;
+}
+.currentOrders:not([data-wishes-count="0"]) .hideOnContent {
+	display: none;
 }
 
 .currentOrderList {
@@ -261,6 +297,10 @@ aside.bodyAside {
 	.category .categoryTitleDiv .search {
 		width: auto;
 	}
+	.category .categoryTitleDiv {
+		grid-template-columns: 100%;
+		margin-bottom: var(--gap_large);
+	}
 }
 
 .secondary {
@@ -281,4 +321,7 @@ hr {
 	width: 100%;
 	height: 1px;
 	background: var(--border);
+}
+.bodyCore .card hr {
+	margin-top: 14px;
 }

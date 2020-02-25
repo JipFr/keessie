@@ -46,27 +46,59 @@ function getSelected() {
 	return allStock.filter(item => item.amount > 0);
 }
 
+function getItemTotal(name) {
+	let item = allStock.find(item => item.name === name);
+
+	let total = 0;
+
+	let itemNoOptions = item.price * item.amount;
+
+	let selectedOptions = Object.keys(item.options).filter(key => item.options[key] === "true");
+	let optionPrices = selectedOptions.map(option => optionPricings[option]);
+
+	total += itemNoOptions;
+	for(let price of optionPrices) {
+		total += price;
+	}
+
+	return total;
+}
+
 function getTotal() {
-	let total = getSelected().map(item => item.amount * item.price).reduce((a, b) => a += b, 0)
+	let total = getSelected().map(item => getItemTotal(item.name)).reduce((a, b) => a += b, 0)
 	return total;
 }
 
 
 let myComp = Vue.component("stock-card", {
-	props: ["name", "price", "amount", "max", "options"],
+	props: ["name", "price", "amount", "max", "options", "collapsed"],
 	data: () => {
 		return {
 			stock,
-			optionIDs
+			optionIDs,
+			optionPricings
 		}
 	},
 	filters: {
 		toPrice,
-		convertoption(key) {
+		convertOption(key) {
 			return optionsConverted[key];
+		},
+		hasOpts(options) {
+
+			// See if there's enabled options, 
+			// to see if there should be a collapse button
+
+			// If not, all values will be null
+
+			return Object.values(options).find(i => i) ? "true" : "false";
+		},
+		getPrice(key) {
+			return optionPricings[key];
 		}
 	},
 	methods: {
+		getItemTotal,
 		addOne() {
 			let amount = this.amount < this.max ? this.amount + 1 : this.amount;
 			this.$emit("update", "amount", amount, this.name);
@@ -74,6 +106,15 @@ let myComp = Vue.component("stock-card", {
 		removeOne() {
 			let amount = this.amount >= 1 ? this.amount - 1 : this.amount;
 			this.$emit("update", "amount", amount, this.name);
+		},
+		toggleCollapse(evt) {
+			
+			let name = evt.target.closest(".card").querySelector(".title").innerText;
+			let relevantItem = Object.values(this.stock).flat().find(item => item.name === name);
+			let toSet = !relevantItem.collapsed;
+
+			this.$emit("reset-collapse");
+			this.$emit("update", "collapsed", toSet, name);
 		},
 		getoptionBool(options, key) {
 			return options[key] ? options[key] : null;
@@ -85,12 +126,11 @@ let myComp = Vue.component("stock-card", {
 			let name = thing.target.closest(".card").querySelector(".title").innerText;
 			let el = thing.target.closest("[data-option]");
 			let opt = el.dataset.option;
-			console.log(name, opt);
 			this.$emit("update-opt", name, opt);
 		}
 	},
 	template: `
-	<div class="stockItem card">
+	<div class="stockItem card" v-bind:data-collapsed="collapsed.toString()" v-bind:data-has-opts="options | hasOpts">
 		<div class="cardMain cardLayout">
 			<div class="cardCore">
 				<h3 class="title">{{ name }}</h3>
@@ -107,20 +147,23 @@ let myComp = Vue.component("stock-card", {
 					</button>
 				</div>
 				<div class="itemTotal">
-					<p class="secondary price">{{price * amount | toPrice}}</p>
+					<p class="secondary price">{{getItemTotal(name) | toPrice}}</p>
 				</div>
 			</aside>
+			<div class="extendOptions" v-on:click="toggleCollapse">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+			</div>
 		</div>
 		<div class="cardExtra" v-if="showCardExtra(options)">
-			<hr>
 			<div class="choices">
 				
-			<div class="choice" v-bind:data-option="key" v-for="key of optionIDs" v-if="getoptionBool(options, key)" v-on:click="toggleOpt">
-					<button class="customCheckmark smallBtn" v-bind:data-checked="getoptionBool(options, key)">
+				<div class="choice" v-bind:data-option="key" v-for="key of optionIDs" v-if="getoptionBool(options, key)" v-on:click="toggleOpt" v-bind:data-checked="getoptionBool(options, key).toString()">
+					<button class="customCheckmark smallBtn">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 					</button>
-					<p>{{ key | convertoption }}</p>
+					<p>{{ key | convertOption }}</p>
+					<span class="price">{{key | getPrice | toPrice}}</span>
 				</div>
 
 			</div>
@@ -147,6 +190,9 @@ const myApp = new Vue({
 		updateOpt(name, opt) {
 			let item = allStock.find(item => item.name === name);
 			item.options[opt] = item.options[opt] === "true" ? "false" : "true";
+		},
+		resetCollapse() {
+			allStock.forEach(item => item.collapsed = true);
 		},
 		getSelected,
 		search,
