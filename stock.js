@@ -2,6 +2,7 @@
 // Mogelijke option TYPES 
 
 const optionIDs = ["largeSize", "onions", "mayo", "curry", "turk"];
+const mainOptionIDs = ["largeSize", "onions", "mayo", "curry"];
 const optionsConverted = {
 	"onions": "Uitjes",
 	"mayo": "Mayo",
@@ -42,17 +43,17 @@ function loadStock() {
 
 	// Friet
 	stock.push(new Item("Oerfriet zonder", 180, "friet", ["largeSize", "onions", "curry"]));
-	stock.push(new Item("Oerfriet met mayo", 210, "friet", [...optionIDs]));
-	stock.push(new Item("Oerfriet speciaal", 240, "friet", [...optionIDs]));
-	stock.push(new Item("Oerfriet pindasaus", 270, "friet", [...optionIDs]));
-	stock.push(new Item("Oerfriet oorlog", 290, "friet", [...optionIDs]));
-	stock.push(new Item("Oerfriet super", 400, "friet", [...optionIDs]));
-	stock.push(new Item("Oerfriet super oorlog", 450, "friet", [...optionIDs]));
-	stock.push(new Item("Oerfriet kipcorn super", 470, "friet", [...optionIDs]));
-	stock.push(new Item("Oerfriet braadworst", 470, "friet", [...optionIDs]));
-	stock.push(new Item("Oerfriet waterfiets", 520, "friet", [...optionIDs]));
-	stock.push(new Item("Friet br. worst oorlog", 500, "friet", [...optionIDs]));
-	stock.push(new Item("", 500, "friet", [...optionIDs]));
+	stock.push(new Item("Oerfriet met mayo", 210, "friet", mainOptionIDs));
+	stock.push(new Item("Oerfriet speciaal", 240, "friet", mainOptionIDs));
+	stock.push(new Item("Oerfriet pindasaus", 270, "friet", mainOptionIDs));
+	stock.push(new Item("Oerfriet oorlog", 290, "friet", mainOptionIDs));
+	stock.push(new Item("Oerfriet super", 400, "friet", mainOptionIDs));
+	stock.push(new Item("Oerfriet super oorlog", 450, "friet", mainOptionIDs));
+	stock.push(new Item("Oerfriet kipcorn super", 470, "friet", mainOptionIDs));
+	stock.push(new Item("Oerfriet braadworst", 470, "friet", mainOptionIDs));
+	stock.push(new Item("Oerfriet waterfiets", 520, "friet", mainOptionIDs));
+	stock.push(new Item("Friet br. worst oorlog", 500, "friet", mainOptionIDs));
+	stock.push(new Item("", 500, "friet", mainOptionIDs));
 
 	// Snacks
 	stock.push(new Item("Frikandel", 160, "snack"));
