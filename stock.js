@@ -53,7 +53,6 @@ function loadStock() {
 	stock.push(new Item("Oerfriet braadworst", 470, "friet", mainOptionIDs));
 	stock.push(new Item("Oerfriet waterfiets", 520, "friet", mainOptionIDs));
 	stock.push(new Item("Friet br. worst oorlog", 500, "friet", mainOptionIDs));
-	stock.push(new Item("", 500, "friet", mainOptionIDs));
 
 	// Snacks
 	stock.push(new Item("Frikandel", 160, "snack"));
