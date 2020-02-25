@@ -152,6 +152,9 @@ aside.bodyAside {
 .bodyCore .card .extras {
 	display: none;
 }
+.card[data-collapsed="false"] .extras {
+	display: none;
+}
 .card .extras {
 	margin: 0;
 	color: var(--secondary);

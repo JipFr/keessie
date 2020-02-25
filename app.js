@@ -58,7 +58,7 @@ function getItemTotal(name) {
 
 	total += itemNoOptions;
 	for(let price of optionPrices) {
-		total += price;
+		total += price * item.amount;
 	}
 
 	return total;
